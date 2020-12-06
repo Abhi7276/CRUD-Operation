@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="row">
+        <div class="table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Creation Date</th>
+                        <th>Assigned To</th>
+                        <th>Author</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="task" *ngFor="let task of taskList">
+                        <ng-container *ngIf="!editTasks.includes(task); else editTask">
+                            <td>{{task.title}}</td>
+                            <td>{{task.description}}</td>
+                            <td>{{task.creationDate | date}}</td>
+                            <td>{{task.assignTo}}</td>
+                            <td>{{task.author}}</td>
+
+                        </ng-container>
+                        <ng-template #editTask>
+                            <td><input type="text" name="title" id="title" (keypress)="submitTask($event, task)" [(ngModel)]="task.title" placeholder="Title" class="form-control"></td>
+                            <td><input type="text" name="description" id="description" (keypress)="submitTask($event, task)" [(ngModel)]="task.description" placeholder="Description" class="form-control"></td>
+                            <td>{{task.creationDate | date}}</td>
+                            <td><input type="text" name="assignTo" id="assignTo" (keypress)="submitTask($event, task)" [(ngModel)]="task.assignTo" placeholder="Assign To" class="form-control"></td>
+                            <td><input type="text" name="author" id="author" (keypress)="submitTask($event, task)" [(ngModel)]="task.author" placeholder="Author" class="form-control"></td>
+                        </ng-template>
+                        <td class="o">
+                            <button class="btn btn-primary" (click)="edit(task)">
+                              <i  class="fa fa-pencil"></i>
+                            </button>
+                            <button class="btn btn-danger" (click)="delete(task)">
+                              <i  class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="crud-form">
+            <form>
+                <div class="form-row">
+
+                    <div class="col-md-2">
+                        <input type="text" name="title" id="title" [(ngModel)]="newTask.title" placeholder="Title" class="form-control" required>
+                    </div>
+                    <div class="col-md-2">
+                        <input name="description" id="description" [(ngModel)]="newTask.description" placeholder="Description" class="form-control" required>
+                    </div>
+                    <div class="col-md-2">
+                        <input name="description" id="assignTo" [(ngModel)]="newTask.assignTo" placeholder="assignTo" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-2">
+                        <input name="description" id="author" [(ngModel)]="newTask.author" placeholder="author" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary" (click)="create()">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
